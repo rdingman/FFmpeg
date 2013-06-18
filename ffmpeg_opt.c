@@ -84,6 +84,7 @@ int print_stats       = -1;
 int qp_hist           = 0;
 int stdin_interaction = 1;
 int frame_bits_per_raw_sample = 0;
+int ignore_empty_streams      = 0;
 
 
 static int intra_only         = 0;
@@ -2565,6 +2566,8 @@ const OptionDef options[] = {
         "force format", "fmt" },
     { "y",              OPT_BOOL,                                    {              &file_overwrite },
         "overwrite output files" },
+    { "ignore_empty_streams",              OPT_BOOL,                        {              &ignore_empty_streams },
+        "continue processing even if one or more output files do not contain a stream" },
     { "n",              OPT_BOOL,                                    {              &no_file_overwrite },
         "do not overwrite output files" },
     { "c",              HAS_ARG | OPT_STRING | OPT_SPEC |

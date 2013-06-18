@@ -415,6 +415,7 @@ extern int print_stats;
 extern int qp_hist;
 extern int stdin_interaction;
 extern int frame_bits_per_raw_sample;
+extern int ignore_empty_streams;
 extern AVIOContext *progress_avio;
 
 extern const AVIOInterruptCB int_cb;

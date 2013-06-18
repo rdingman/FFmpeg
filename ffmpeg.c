@@ -2098,7 +2098,10 @@ static int transcode_init(void)
         if (!oc->nb_streams && !(oc->oformat->flags & AVFMT_NOSTREAMS)) {
             av_dump_format(oc, i, oc->filename, 1);
             av_log(NULL, AV_LOG_ERROR, "Output file #%d does not contain any stream\n", i);
-            return AVERROR(EINVAL);
+
+            if (!ignore_empty_streams) {
+                return AVERROR(EINVAL);
+            }
         }
     }
 
@@ -2483,6 +2486,10 @@ static int transcode_init(void)
     /* open files and write file headers */
     for (i = 0; i < nb_output_files; i++) {
         oc = output_files[i]->ctx;
+        if (ignore_empty_streams && !oc->nb_streams && !(oc->oformat->flags & AVFMT_NOSTREAMS)) {
+            continue;
+        }
+
         oc->interrupt_callback = int_cb;
         if ((ret = avformat_write_header(oc, &output_files[i]->opts)) < 0) {
             char errbuf[128];
